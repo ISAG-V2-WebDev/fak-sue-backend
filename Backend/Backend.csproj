@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>aspnet-Backend-486E8C45-9C38-48BD-9967-055E25DFD7E5</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-preview.2.23128.3" />
+        <PackageReference Include="Microsoft.Identity.Web" Version="1.16.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0-preview.2.23128.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Foods.Core\Foods.Core.csproj" />
+    </ItemGroup>
+
+</Project>
