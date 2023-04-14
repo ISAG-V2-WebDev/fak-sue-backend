@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Foods.Core
@@ -5,8 +6,8 @@ namespace Foods.Core
     public class Food
     {
         [BsonId]
-        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public string ID { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
         public string Restaurant { get; set; }
         public string FoodName { get; set; }
         public string Category { get; set; }

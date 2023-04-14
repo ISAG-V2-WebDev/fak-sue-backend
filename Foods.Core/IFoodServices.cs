@@ -4,8 +4,9 @@ public interface IFoodServices
 {
     List<Food> GetFoods();
     Food GetFood_id(string id);
-    Food GetFood_restaurant(string restaurant);
+    List<Food> GetFood_restaurant(string restaurant);
     Food AddFood(Food food);
-    void DeleteFood(string id);
+    void DeleteFood_id(string id);
+    void DeleteFood_foodname(string foodname);
     Food UpdateFood(Food food);
 }

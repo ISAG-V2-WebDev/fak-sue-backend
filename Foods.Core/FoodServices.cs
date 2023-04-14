@@ -12,15 +12,9 @@ public class FoodServices : IFoodServices
     }
     public List<Food> GetFoods() => _foods.Find(food => true).ToList();
 
-    public Food GetFood_id(string id)
-    {
-        throw new NotImplementedException();
-    }
+    public Food GetFood_id(string id) => _foods.Find(food => food.Id == id).First();
 
-    public Food GetFood_restaurant(string restaurant)
-    {
-        throw new NotImplementedException();
-    }
+    public List<Food> GetFood_restaurant(string restaurant) => _foods.Find(food => food.Restaurant == restaurant).ToList();
 
     public Food AddFood(Food food)
     {
@@ -28,13 +22,14 @@ public class FoodServices : IFoodServices
         return food;
     }
 
-    public void DeleteFood(string id)
-    {
-        throw new NotImplementedException();
-    }
+    public void DeleteFood_id(string id) => _foods.DeleteOne(food => food.Id == id);
+
+    public void DeleteFood_foodname(string foodname) => _foods.DeleteOne(food => food.FoodName == foodname);
 
     public Food UpdateFood(Food food)
     {
-        throw new NotImplementedException();
+        GetFood_id(food.Id);
+        _foods.ReplaceOne(f => f.Id == food.Id, food);
+        return food;
     }
 }
