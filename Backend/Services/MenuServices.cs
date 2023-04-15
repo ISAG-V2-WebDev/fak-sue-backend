@@ -9,7 +9,7 @@ public class MenuServices : IMenuServices
 
     public MenuServices(IDbClient dbClient)
     {
-        _menu = dbClient.GetMenuCollection();
+        _menu = dbClient.MenuCollection();
     }
     public List<Menu> GetMenu() => _menu.Find(food => true).ToList();
 

@@ -5,5 +5,5 @@ namespace Backend.Services;
 
 public interface IDbClient
 {
-    IMongoCollection<Menu> GetMenuCollection();
+    IMongoCollection<Menu> MenuCollection();
 }

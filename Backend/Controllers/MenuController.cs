@@ -7,7 +7,7 @@ using Backend.Services;
 namespace Backend.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class MenuController : ControllerBase
 {
     private readonly IMenuServices _menuServices;
@@ -44,7 +44,7 @@ public class MenuController : ControllerBase
         return Ok(CreatedAtRoute("GetFood", new {id = food.Id}, food));
     }
 
-    [HttpDelete("id={id}")]
+    [HttpDelete("delete/id={id}")]
     public IActionResult DeleteMenu_id(string id)
     {
         _menuServices.DeleteMenu_id(id);
