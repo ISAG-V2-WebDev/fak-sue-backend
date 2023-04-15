@@ -10,10 +10,11 @@ namespace Backend.Controllers;
 public class MenuController : ControllerBase
 {
     private readonly IMenuServices _menuServices;
-    
-    public MenuController(IMenuServices menuServices)
+    private readonly ILogger<MenuController> _logger;
+    public MenuController(IMenuServices menuServices, ILogger<MenuController> logger)
     {
         _menuServices = menuServices;
+        _logger = logger;
     }
 
     [HttpGet]
