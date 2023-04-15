@@ -5,7 +5,8 @@ namespace Backend.Services;
 
 public interface IDbClient
 {
-    IMongoCollection<Menu> MenuCollection();
-    IMongoCollection<Blog> BlogCollection();
-    IMongoCollection<Announcement> AnnouncementCollection();
+    public IMongoCollection<Menu> MenuCollection();
+    public IMongoCollection<User> UserCollection();
+    public IMongoCollection<Blog> BlogCollection();
+    public IMongoCollection<Announcement> AnnouncementCollection();
 }
