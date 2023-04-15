@@ -1,6 +1,7 @@
 using MongoDB.Driver;
+using Backend.Models;
 
-namespace Backend.Models;
+namespace Backend.Services;
 
 public interface IDbClient
 {

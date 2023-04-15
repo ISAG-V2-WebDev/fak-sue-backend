@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using Backend.Models;
+using Backend.Services;
 
 namespace Backend.Controllers;
 

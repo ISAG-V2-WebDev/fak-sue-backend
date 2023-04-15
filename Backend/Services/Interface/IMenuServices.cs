@@ -1,4 +1,6 @@
-namespace Backend.Models;
+using Backend.Models;
+
+namespace Backend.Services;
 
 public interface IMenuServices
 {
