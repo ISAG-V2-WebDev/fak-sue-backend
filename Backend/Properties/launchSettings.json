@@ -17,8 +17,11 @@
       "applicationUrl": "https://localhost:7150;http://localhost:5101",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DATABASE_NAME": "FoodsDB",
-        "MENU_COLLECTION_NAME": "Menu"
+        "MENU_DATABASE_NAME": "FoodsDB",
+        "MENU_COLLECTION_NAME": "Menu",
+        "USER_DATABASE_NAME": "UsersDB",
+        "USER_COLLECTION_NAME": "Users",
+        "ORDER_COLLECTION_NAME": "Orders"
       }
     },
     "IIS Express": {
@@ -27,8 +30,11 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DATABASE_NAME": "FoodsDB",
-        "MENU_COLLECTION_NAME": "Menu"
+        "MENU_DATABASE_NAME": "FoodsDB",
+        "MENU_COLLECTION_NAME": "Menu",
+        "USER_DATABASE_NAME": "UsersDB",
+        "USER_COLLECTION_NAME": "Users",
+        "ORDER_COLLECTION_NAME": "Orders"
       }
     }
   }
