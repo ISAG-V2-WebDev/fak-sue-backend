@@ -18,7 +18,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DATABASE_NAME": "FoodsDB",
-        "FOODS_COLLECTION_NAME": "Menu"
+        "MENU_COLLECTION_NAME": "Menu"
       }
     },
     "IIS Express": {
@@ -28,7 +28,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DATABASE_NAME": "FoodsDB",
-        "FOODS_COLLECTION_NAME": "Menu"
+        "MENU_COLLECTION_NAME": "Menu"
       }
     }
   }

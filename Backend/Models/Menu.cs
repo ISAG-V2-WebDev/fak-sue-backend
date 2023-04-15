@@ -1,9 +1,9 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Foods.Core
+namespace Backend.Models
 {
-    public class Food
+    public class Menu
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

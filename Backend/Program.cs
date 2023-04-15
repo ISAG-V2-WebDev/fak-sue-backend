@@ -1,7 +1,9 @@
-using Foods.Core;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
+
+using Backend.Models;
+using Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +16,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddSingleton<IDbClient, DbClient>();
 builder.Services.Configure<FoodsDB_config>(builder.Configuration);
-builder.Services.AddTransient<IFoodServices, FoodServices>();
+builder.Services.AddTransient<IMenuServices, MenuServices>();
 
 //------------------------------------------------------------------------------------------
 
