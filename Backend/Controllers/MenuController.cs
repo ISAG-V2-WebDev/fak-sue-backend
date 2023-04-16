@@ -51,7 +51,7 @@ public class MenuController : ControllerBase
         return NoContent();
     }
 
-    [HttpPut]
+    [HttpPatch]
     public IActionResult UpdateMenu(Menu food)
     {
         return Ok(_menuServices.UpdateMenu(food));
