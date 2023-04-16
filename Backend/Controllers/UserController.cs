@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Backend.Config;
 using Backend.Models;
 using Backend.Models.Request;
 using Backend.Models.Response;
@@ -63,13 +64,43 @@ public class UserController : ControllerBase
         return Ok($"Password for {user} reset.");
     }
 
-    // public Task<IActionResult> UpdateUser(UpdateUserRequest body)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
-    // public Task<IActionResult> DeleteUser()
-    // {
-    //     throw new NotImplementedException();
-    // }
+    [HttpPatch]
+    [Route("update")]
+    public async Task<IActionResult> UpdateUser(UpdateUserRequest body)
+    {
+        string? username = Request.HttpContext.User.FindFirstValue("username");
+        
+        User? user = await _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
+        if (user == null)
+            return NotFound("User is not found.");
+
+        user.Name = body.Name ?? user.Name;
+        user.ProfileImage = body.ProfileImage ?? user.ProfileImage;
+        user.UpdatedDate = DateTime.UtcNow;
+
+        await _user.ReplaceOneAsync(x => x.Id == user.Id, user);
+
+        return Ok(user);
+    }
+    
+    [HttpDelete]
+    [Route("delete")]
+    public async Task<IActionResult> DeleteUser()
+    {
+        string? username = Request.HttpContext.User.FindFirstValue("username");
+        
+        User? user = await _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
+        if (user == null)
+            return NotFound("User is not found.");
+
+        user.Banned = !user.Deleted;
+        user.Deleted = !user.Deleted;
+
+        Response.Cookies.Delete(Constant.Name.AccessToken);
+        Response.Cookies.Delete(Constant.Name.RefreshToken);
+
+        await _user.ReplaceOneAsync(x => x.Id == user.Id, user);
+
+        return Ok(user);
+    }
 }
