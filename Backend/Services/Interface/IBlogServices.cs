@@ -10,7 +10,7 @@ public interface IBlogServices
     public Task<BlogListResponse> GetBlogs();
     public Task<BlogResponse> GetBlog(string id);
     public Task<BlogResponse> CreateBlog([FromBody] CreateBlogRequest body, string username);
-    public Task<IActionResult> UpdateBlog(string id, [FromBody] EditContentRequest body);
-    public Task<IActionResult> HideBlog(string id);
-    public Task<IActionResult> DeleteBlog(string id);
+    public Task<Blog?> UpdateBlog(string id, [FromBody] EditContentRequest body);
+    public Task<BlogResponse> HideBlog(string id);
+    public Task<BlogResponse> DeleteBlog(string id);
 }

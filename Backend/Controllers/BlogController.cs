@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Backend.Models;
 using Backend.Models.Request;
 using Backend.Models.Response;
 using Backend.Services;
@@ -46,17 +47,23 @@ public class BlogController : ControllerBase
             return Unauthorized("You are not authorized user.");
 
         BlogResponse blogResponse = await _blogServices.CreateBlog(body, username);
-        if (blogResponse.Author == null)
+        if (blogResponse.Author == null || blogResponse.BlogId == null)
             return NotFound("User is not found");
 
         return Ok(CreatedAtAction("CreateBlog", blogResponse));                             //Change this, maybe?
     }
     
-    // public Task<IActionResult> UpdateBlog(string id, EditContentRequest body)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
+    [HttpPatch]
+    [Route("update/id={id:length(24)}")]
+    public async Task<IActionResult> UpdateBlog(string id, EditContentRequest body)
+    {
+        Blog? blog = await _blogServices.UpdateBlog(id, body);
+        if (blog == null)
+            return NotFound("Blog is not found.");
+        
+        return Ok(blog);
+    }
+    
     // public Task<IActionResult> HideBlog(string id)
     // {
     //     throw new NotImplementedException();

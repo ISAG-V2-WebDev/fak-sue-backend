@@ -12,13 +12,11 @@ public class BlogServices : IBlogServices
 {
     private readonly IMongoCollection<Blog> _blog;
     private readonly IMongoCollection<User> _user;
-    private readonly ILogger<BlogServices> _logger;
 
-    public BlogServices(IDbClient dbClient, ILogger<BlogServices> logger)
+    public BlogServices(IDbClient dbClient)
     {
         _blog = dbClient.BlogCollection();
         _user = dbClient.UserCollection();
-        _logger = logger;
     }
 
     public async Task<BlogListResponse> GetBlogs()
@@ -55,7 +53,7 @@ public class BlogServices : IBlogServices
 
     public async Task<BlogResponse> CreateBlog(CreateBlogRequest body, string username)
     {
-        User user = FindUser(username);
+        User? user = _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefault();
         if (user == null)
             return new BlogResponse(null!, null!);
         
@@ -65,25 +63,27 @@ public class BlogServices : IBlogServices
         return new BlogResponse(newBlog, user);
     }
 
-    public User FindUser(string username)
+    public async Task<Blog?> UpdateBlog(string id, EditContentRequest body)
     {
-        User? user = _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefault();
-        if (user == null)
-            return null;
-        return user;
+        Blog? blog = await _blog.Find(x => x.Id == id && !x.Hide && !x.Deleted).FirstOrDefaultAsync();
+        if (blog != null)
+        {
+            blog.Topic = body.Topic ?? blog.Topic;
+            blog.Detail = body.Content ?? blog.Detail;
+            blog.Hide = body.Hide ?? blog.Hide;
+            blog.UpdatedDate = DateTime.UtcNow;
+            await _blog.ReplaceOneAsync(x => x.Id == id, blog);
+        }
+        
+        return blog;
     }
 
-    public Task<IActionResult> UpdateBlog(string id, EditContentRequest body)
+    public Task<BlogResponse> HideBlog(string id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IActionResult> HideBlog(string id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IActionResult> DeleteBlog(string id)
+    public Task<BlogResponse> DeleteBlog(string id)
     {
         throw new NotImplementedException();
     }
