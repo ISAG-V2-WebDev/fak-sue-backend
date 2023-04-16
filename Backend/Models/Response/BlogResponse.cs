@@ -30,14 +30,17 @@ public class BlogResponse
 
     public BlogResponse(Blog blog, User? user)
     {
-        this.BlogId = blog.Id;
-        if (user != null)
-            this.Author = new UserResponse(user);
-        this.Topic = blog.Topic;
-        this.Content = blog.Detail;
-        this.Hide = blog.Hide;
-        this.Deleted = blog.Deleted;
-        this.CreatedDate = blog.CreatedDate;
-        this.UpdatedDate = blog.UpdatedDate;
+        if (blog != null)
+        {
+            this.BlogId = blog.Id;
+            if (user != null)
+                this.Author = new UserResponse(user);
+            this.Topic = blog.Topic;
+            this.Content = blog.Detail;
+            this.Hide = blog.Hide;
+            this.Deleted = blog.Deleted;
+            this.CreatedDate = blog.CreatedDate;
+            this.UpdatedDate = blog.UpdatedDate;
+        }
     }
 }

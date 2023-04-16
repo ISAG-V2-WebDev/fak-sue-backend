@@ -1,3 +1,6 @@
+using System.Security.Claims;
+using Backend.Models.Request;
+using Backend.Models.Response;
 using Backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,16 +29,29 @@ public class BlogController : ControllerBase
         return Ok(await _blogServices.GetBlogs());
     }
     
-    // public Task<IActionResult> GetBlog(string id)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
-    // public Task<IActionResult> CreateBlog(CreateBlogRequest body)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
+    [HttpGet]
+    [AllowAnonymous]
+    [Route("{id:length(24)}")]
+    public async Task<IActionResult> GetBlog(string id)
+    {
+        return Ok(await _blogServices.GetBlog(id));
+    }
+    
+    [HttpPost]
+    [Route("create")]
+    public async Task<IActionResult> CreateBlog(CreateBlogRequest body)
+    {
+        string? username = Request.HttpContext.User.FindFirstValue("username");
+        if (String.IsNullOrEmpty(username))
+            return Unauthorized("You are not authorized user.");
+
+        BlogResponse blogResponse = await _blogServices.CreateBlog(body, username);
+        if (blogResponse.Author == null)
+            return NotFound("User is not found");
+
+        return Ok(CreatedAtAction("CreateBlog", blogResponse));
+    }
+    
     // public Task<IActionResult> UpdateBlog(string id, EditContentRequest body)
     // {
     //     throw new NotImplementedException();

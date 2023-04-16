@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using Backend.Models;
 using Backend.Models.Request;
 using Backend.Models.Response;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
@@ -38,14 +40,37 @@ public class BlogServices : IBlogServices
         return blogList;
     }
 
-    public Task<IActionResult> GetBlog(string id)
+    public async Task<BlogResponse> GetBlog(string id)
     {
-        throw new NotImplementedException();
+        Blog? blog = await _blog.Find(x => x.Id == id && !x.Hide && !x.Deleted).FirstOrDefaultAsync();
+
+        if (blog == null)
+            return new BlogResponse(null!, null!);
+        
+        User? author = await _user.Find(x => x.Id == blog.UserId && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
+
+        BlogResponse blogResponse = new BlogResponse(blog, author);
+        return blogResponse;
     }
 
-    public Task<IActionResult> CreateBlog(CreateBlogRequest body)
+    public async Task<BlogResponse> CreateBlog(CreateBlogRequest body, string username)
     {
-        throw new NotImplementedException();
+        User user = FindUser(username);
+        if (user == null)
+            return new BlogResponse(null!, null!);
+        
+        Blog newBlog = new Blog { Topic = body.Topic, Detail = body.Content, UserId = user.Id };
+        await _blog.InsertOneAsync(newBlog);
+
+        return new BlogResponse(newBlog, user);
+    }
+
+    public User FindUser(string username)
+    {
+        User? user = _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefault();
+        if (user == null)
+            return null;
+        return user;
     }
 
     public Task<IActionResult> UpdateBlog(string id, EditContentRequest body)
