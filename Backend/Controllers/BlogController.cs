@@ -31,7 +31,7 @@ public class BlogController : ControllerBase
     
     [HttpGet]
     [AllowAnonymous]
-    [Route("{id:length(24)}")]
+    [Route("id={id:length(24)}")]
     public async Task<IActionResult> GetBlog(string id)
     {
         return Ok(await _blogServices.GetBlog(id));
@@ -49,7 +49,7 @@ public class BlogController : ControllerBase
         if (blogResponse.Author == null)
             return NotFound("User is not found");
 
-        return Ok(CreatedAtAction("CreateBlog", blogResponse));
+        return Ok(CreatedAtAction("CreateBlog", blogResponse));                             //Change this, maybe?
     }
     
     // public Task<IActionResult> UpdateBlog(string id, EditContentRequest body)

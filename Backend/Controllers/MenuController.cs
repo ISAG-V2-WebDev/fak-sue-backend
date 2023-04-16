@@ -24,7 +24,7 @@ public class MenuController : ControllerBase
         return Ok(_menuServices.GetMenu());
     }
 
-    [HttpGet("id={id}", Name = "GetFood_id")]
+    [HttpGet("id={id:length(24)}", Name = "GetFood_id")]
     public IActionResult GetMenu_id(string id)
     {
         return Ok(_menuServices.GetMenu_id(id));
@@ -44,7 +44,7 @@ public class MenuController : ControllerBase
         return Ok(CreatedAtRoute("GetFood", new {id = food.Id}, food));
     }
 
-    [HttpDelete("delete/id={id}")]
+    [HttpDelete("delete/id={id:length(24)}")]
     public IActionResult DeleteMenu_id(string id)
     {
         _menuServices.DeleteMenu_id(id);
