@@ -11,6 +11,6 @@ public interface IBlogServices
     public Task<BlogResponse> GetBlog(string id);
     public Task<BlogResponse> CreateBlog([FromBody] CreateBlogRequest body, string username);
     public Task<Blog?> UpdateBlog(string id, [FromBody] EditContentRequest body);
-    public Task<BlogResponse> HideBlog(string id);
-    public Task<BlogResponse> DeleteBlog(string id);
+    public Task<BlogResponse> HideBlog(string id, string username);
+    public Task<BlogResponse> DeleteBlog(string id, string username);
 }

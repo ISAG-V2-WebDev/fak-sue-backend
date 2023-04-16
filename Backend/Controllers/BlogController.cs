@@ -64,13 +64,37 @@ public class BlogController : ControllerBase
         return Ok(blog);
     }
     
-    // public Task<IActionResult> HideBlog(string id)
-    // {
-    //     throw new NotImplementedException();
-    // }
-    //
-    // public Task<IActionResult> DeleteBlog(string id)
-    // {
-    //     throw new NotImplementedException();
-    // }
+    [HttpPatch]
+    [Route("hide/{id:length(24)}")]
+    public async Task<IActionResult> HideBlog(string id)
+    {
+        string? username = Request.HttpContext.User.FindFirstValue("username");
+        if (String.IsNullOrEmpty(username))
+            return Unauthorized("You are not authorized user.");
+
+        BlogResponse blogResponse = await _blogServices.HideBlog(id, username);
+        if (blogResponse.Author == null)
+            return NotFound("User is not found.");
+        if (blogResponse.BlogId == null)
+            return NotFound("Blog is not found.");
+        
+        return Ok(blogResponse);
+    }
+    
+    [HttpDelete]
+    [Route("delete/{id:length(24)}")]
+    public async Task<IActionResult> DeleteBlog(string id)
+    {
+        string? username = Request.HttpContext.User.FindFirstValue("username");
+        if (String.IsNullOrEmpty(username))
+            return Unauthorized("You are not authorized user.");
+
+        BlogResponse blogResponse = await _blogServices.DeleteBlog(id, username);
+        if (blogResponse.Author == null)
+            return NotFound("User is not found.");
+        if (blogResponse.BlogId == null)
+            return NotFound("Blog is not found.");
+        
+        return NoContent();
+    }
 }

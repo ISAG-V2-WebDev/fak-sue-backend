@@ -53,7 +53,7 @@ public class BlogServices : IBlogServices
 
     public async Task<BlogResponse> CreateBlog(CreateBlogRequest body, string username)
     {
-        User? user = _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefault();
+        User? user = await _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
         if (user == null)
             return new BlogResponse(null!, null!);
         
@@ -78,13 +78,32 @@ public class BlogServices : IBlogServices
         return blog;
     }
 
-    public Task<BlogResponse> HideBlog(string id)
+    public async Task<BlogResponse> HideBlog(string id, string username)
     {
-        throw new NotImplementedException();
+        User? user = await _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
+        Blog? blog = await _blog.Find(x => x.Id == id && !x.Hide && !x.Deleted).FirstOrDefaultAsync();
+        
+        if (user != null && blog != null)
+        {
+            blog.Hide = !blog.Hide;
+            await _blog.ReplaceOneAsync(x => x.Id == id, blog);
+        }
+            
+        return new BlogResponse(blog, user);
     }
 
-    public Task<BlogResponse> DeleteBlog(string id)
+    public async Task<BlogResponse> DeleteBlog(string id, string username)
     {
-        throw new NotImplementedException();
+        User? user = await _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
+        Blog? blog = await _blog.Find(x => x.Id == id && !x.Hide && !x.Deleted).FirstOrDefaultAsync();
+        
+        if (user != null && blog != null)
+        {
+            blog.Hide = true;
+            blog.Deleted = true;
+            await _blog.ReplaceOneAsync(x => x.Id == id, blog);
+        }
+            
+        return new BlogResponse(blog, user);
     }
 }
