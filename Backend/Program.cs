@@ -14,9 +14,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 //------------------------------------------------------------------------------------------
 
-builder.Services.AddSingleton<IDbClient, DbClient>();
 builder.Services.Configure<FoodsDB_config>(builder.Configuration);
+builder.Services.AddSingleton<IDbClient, DbClient>();
 builder.Services.AddTransient<IMenuServices, MenuServices>();
+builder.Services.AddSingleton<IBlogServices, BlogServices>();
+builder.Services.AddSingleton<IUserServices, UserServices>();
 
 //------------------------------------------------------------------------------------------
 
