@@ -77,6 +77,7 @@ public class UserController : ControllerBase
         user.Name = body.Name ?? user.Name;
         user.ProfileImage = body.ProfileImage ?? user.ProfileImage;
         user.UpdatedDate = DateTime.UtcNow;
+        //user.studentID
 
         await _user.ReplaceOneAsync(x => x.Id == user.Id, user);
 

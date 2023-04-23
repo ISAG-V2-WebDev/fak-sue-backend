@@ -23,4 +23,7 @@ public class AdminUserUpdateRequest
     
     [JsonPropertyName("profile_image")]
     public string? ProfileImage { get; set; }
+    
+    [JsonPropertyName("student_id")]
+    public string? StudentId { get; set; }
 }

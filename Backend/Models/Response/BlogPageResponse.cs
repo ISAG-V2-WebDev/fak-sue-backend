@@ -15,6 +15,12 @@ public class BlogPageResponse
 
     [JsonPropertyName("content")]
     public string Content { get; set; } = "";
+    
+    [JsonPropertyName("max_order")] 
+    public int MaxOrder { get; set; } = 1;
+    
+    [JsonPropertyName("timestamp")]
+    public DateTime Timestamp { get; set; }
 
     [JsonPropertyName("created_date")]
     public DateTime CreatedDate { get; set; }
@@ -26,6 +32,8 @@ public class BlogPageResponse
     {
         this.BlogId = blog.Id;
         this.Author = new UserResponse(user);
+        this.MaxOrder = blog.MaxOrder;
+        this.Timestamp = blog.TimeStamp;
         this.Topic = blog.Topic;
         this.Content = blog.Detail;
         this.CreatedDate = blog.CreatedDate;

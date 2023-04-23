@@ -24,6 +24,9 @@ public class Blog
     [JsonPropertyName("user_id")]
     public string UserId { get; set; } = null!;
 
+    [BsonElement("max_order")] 
+    public int MaxOrder { get; set; } = 1;
+
     [BsonElement("hide")]
     [JsonPropertyName("hide")]
     public bool Hide { get; set; } = false;

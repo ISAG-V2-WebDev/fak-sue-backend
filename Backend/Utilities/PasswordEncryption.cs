@@ -4,12 +4,12 @@ using Backend.Config;
 
 namespace Backend.Utilities;
 
-public class PasswordEncryption
+public static class PasswordEncryption
 {
     public static string Encrypt(string password)
     {
         byte[] textBytes = Encoding.UTF8.GetBytes(password);
-        byte[] keyBytes = Encoding.UTF8.GetBytes(Configuration.staticConfig["Hmac:Key"]);
+        byte[] keyBytes = Encoding.UTF8.GetBytes(Configuration.staticConfig["Hmac:Key"]!);
 
         byte[] hashBytes;
         using (HMACSHA256 hash = new HMACSHA256(keyBytes))
