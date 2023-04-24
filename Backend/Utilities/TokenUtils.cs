@@ -15,9 +15,9 @@ public class TokenUtils
     ValidateAudience = true,
     ValidateLifetime = true,
     ValidateIssuerSigningKey = true,
-    ValidIssuer = Configuration.staticConfig["Jwt:Issuer"],
-    ValidAudience = Configuration.staticConfig["Jwt:Audience"],
-    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.staticConfig["Jwt:SecretKey"])),
+    ValidIssuer = Configuration.StaticConfig["Jwt:Issuer"],
+    ValidAudience = Configuration.StaticConfig["Jwt:Audience"],
+    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.StaticConfig["Jwt:SecretKey"])),
     ClockSkew = TimeSpan.Zero
   };
 
@@ -47,12 +47,12 @@ public class TokenUtils
 
   private static string GenerateToken(DateTime expires, Claim[]? claims = null)
   {
-    SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.staticConfig["Jwt:SecretKey"]));
+    SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.StaticConfig["Jwt:SecretKey"]));
     SigningCredentials credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
     JwtSecurityToken token = new JwtSecurityToken(
-      Configuration.staticConfig["Jwt:Issuer"],
-      Configuration.staticConfig["Jwt:Audience"],
+      Configuration.StaticConfig["Jwt:Issuer"],
+      Configuration.StaticConfig["Jwt:Audience"],
       claims,
       expires: expires,
       signingCredentials: credentials

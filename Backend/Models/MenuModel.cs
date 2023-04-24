@@ -14,9 +14,9 @@ namespace Backend.Models
         [BsonElement("foodname")]
         public string FoodName { get; set; } = "";
         [BsonElement("category")]
-        public string Category { get; set; } = "";
+        public string? Category { get; set; } = "";
         [BsonElement("price")]
-        public double Price { get; set; } = 0;
+        public double? Price { get; set; } = 0;
     }
 }
 

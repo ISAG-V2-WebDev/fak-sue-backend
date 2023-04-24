@@ -16,6 +16,9 @@ public class AdminBlogUpdateRequest
     [JsonPropertyName("max_order")]
     public int MaxOrder { get; set; }
     
+    [JsonPropertyName("orders")]
+    public List<Order>? Orders { get; set; }
+    
     [JsonPropertyName("hide")]
     public bool? Hide { get; set; }
     

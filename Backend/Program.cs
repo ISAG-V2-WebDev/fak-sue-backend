@@ -1,3 +1,4 @@
+using Backend.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
@@ -19,6 +20,9 @@ builder.Services.AddSingleton<IDbClient, DbClient>();
 builder.Services.AddTransient<IMenuServices, MenuServices>();
 builder.Services.AddSingleton<IBlogServices, BlogServices>();
 builder.Services.AddSingleton<IUserServices, UserServices>();
+
+// builder.Services.Configure<Configuration>(builder.Configuration);
+builder.Services.AddSingleton(new Configuration(builder.Configuration));
 
 //------------------------------------------------------------------------------------------
 

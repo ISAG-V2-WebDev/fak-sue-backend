@@ -18,4 +18,7 @@ public class EditContentRequest
     
     [JsonPropertyName("hide")]
     public bool? Hide { get; set; }
+    
+    [JsonPropertyName("orders")]
+    public List<Order>? Orders { get; set; }
 }

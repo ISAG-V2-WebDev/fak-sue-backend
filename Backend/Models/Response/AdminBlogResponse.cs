@@ -19,6 +19,9 @@ public class AdminBlogResponse
     [JsonPropertyName("max_order")] 
     public int MaxOrder { get; set; } = 1;
     
+    [JsonPropertyName("orders")] 
+    public List<Order>? Orders { get; set; } = null!;
+    
     [JsonPropertyName("timestamp")]
     public DateTime Timestamp { get; set; }
     
@@ -41,7 +44,9 @@ public class AdminBlogResponse
         this.Topic = blog.Topic;
         this.Content = blog.Detail;
         this.MaxOrder = blog.MaxOrder;
+        this.Orders = blog.Orders;
         this.Timestamp = blog.TimeStamp;
+        
         this.Hide = blog.Hide;
         this.Deleted = blog.Deleted;
         this.CreatedDate = blog.CreatedDate;

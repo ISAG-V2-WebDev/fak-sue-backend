@@ -13,6 +13,10 @@ public class RegisterRequest
     [JsonPropertyName("password")]
     public string Password { get; set; } = null!;
     
+    // [Required]
+    // [JsonPropertyName("email")]
+    // public EmailAddressAttribute
+    
     [JsonPropertyName("name")]
     public string Name { get; set; } = "";
 

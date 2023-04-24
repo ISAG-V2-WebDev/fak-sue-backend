@@ -15,7 +15,10 @@ public class User
     
     [BsonElement("password")]
     [JsonIgnore]
-    public string Password { get; set; } = null!;
+    public string? Password { get; set; } = null!;
+
+    [BsonElement("email")] 
+    public string? Email { get; set; } = null!;
     
     [BsonElement("name")]
     [JsonPropertyName("name")]
@@ -27,7 +30,7 @@ public class User
     
     [BsonElement("role")]
     [JsonPropertyName("role")]
-    public string Role { get; set; } = "";
+    public string? Role { get; set; } = "";
 
     [BsonElement("profile_image")]
     [JsonPropertyName("profile_image")]
@@ -43,11 +46,11 @@ public class User
     
     [BsonElement("created_date")]
     [JsonPropertyName("created_date")]
-    public DateTime CreatedDate { get; set; } = DateTime.Now;
+    public DateTime? CreatedDate { get; set; } = DateTime.Now;
     
     [BsonElement("updated_date")]
     [JsonPropertyName("updated_date")]
-    public DateTime UpdatedDate { get; set; } = DateTime.Now;
+    public DateTime? UpdatedDate { get; set; } = DateTime.Now;
 
     public override string ToString()
     {

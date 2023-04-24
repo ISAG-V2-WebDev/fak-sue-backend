@@ -171,22 +171,38 @@ public class AdminController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> MockData()
     {
-        List<User> newUsers = new List<User>()
+        List<User>? newUsers = new List<User>
         {
             new User
             {
-                Username = "admin1", Password = PasswordEncryption.Encrypt("Admin13579"), Name = "Admin Rosemarries",
+                Username = "admin1", Password = PasswordEncryption.Encrypt("AdminZa55+"), Name = "Admin Rosemarries",
+                Email = "64010720@kmitl.ac.th",
                 Role = "admin"
             },
             new User
             {
-                Username = "admin2", Password = PasswordEncryption.Encrypt("Admin13579"), Name = "Admin PickAUserName",
+                Username = "admin2", Password = PasswordEncryption.Encrypt("AdminZa55+"), Name = "Admin PickAUserName",
+                Role = "admin"
+            },
+            new User
+            {
+                Username = "admin3", Password = PasswordEncryption.Encrypt("AdminZa55+"), Name = "Admin Butler",
+                Role = "admin"
+            },
+            new User
+            {
+                Username = "admin4", Password = PasswordEncryption.Encrypt("AdminZa55+"), Name = "Admin JanRainjer",
+                Role = "admin"
+            },
+            new User
+            {
+                Username = "admin5", Password = PasswordEncryption.Encrypt("AdminZa55+"), Name = "Admin MuMu",
                 Role = "admin"
             },
             new User { Username = "test", Password = PasswordEncryption.Encrypt("userX123"), Name = "Test" }
         };
 
-        List<Blog> newBlogs = new List<Blog>()
+        List<Blog>? newBlogs = new List<Blog>
         {
             new Blog
             {
@@ -196,7 +212,7 @@ public class AdminController : ControllerBase
             },
             new Blog
             {
-                Topic = "Dinner",
+                Topic = "Brunch Time!",
                 TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 18, 0, 0),
                 UserId = newUsers[1].Id
             },
@@ -204,11 +220,11 @@ public class AdminController : ControllerBase
             {
                 Topic = "Lunch Time My Friend!",
                 TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 12, 0, 0),
-                UserId = newUsers[2].Id
+                UserId = newUsers[4].Id
             }
         };
 
-        await _user.InsertManyAsync(newUsers);
+        // await _user.InsertManyAsync(newUsers);
         await _blog.InsertManyAsync(newBlogs);
 
         return Ok(new { users = newUsers, blogs = newBlogs });

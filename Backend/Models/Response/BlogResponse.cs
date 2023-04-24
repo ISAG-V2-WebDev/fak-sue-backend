@@ -19,6 +19,9 @@ public class BlogResponse
     [JsonPropertyName("max_order")] 
     public int MaxOrder { get; set; } = 1;
     
+    [JsonPropertyName("orders")] 
+    public List<Order>? Orders { get; set; } = null!;
+    
     [JsonPropertyName("timestamp")]
     public DateTime Timestamp { get; set; }
     
@@ -36,19 +39,18 @@ public class BlogResponse
 
     public BlogResponse(Blog blog, User? user)
     {
-        if (blog != null)
-        {
-            this.BlogId = blog.Id;
-            if (user != null)
-                this.Author = new UserResponse(user);
-            this.Topic = blog.Topic;
-            this.Content = blog.Detail;
-            this.MaxOrder = blog.MaxOrder;
-            this.Timestamp = blog.TimeStamp;
-            this.Hide = blog.Hide;
-            this.Deleted = blog.Deleted;
-            this.CreatedDate = blog.CreatedDate;
-            this.UpdatedDate = blog.UpdatedDate;
-        }
+        this.BlogId = blog.Id;
+        if (user != null)
+            this.Author = new UserResponse(user);
+        this.Topic = blog.Topic;
+        this.Content = blog.Detail;
+        this.MaxOrder = blog.MaxOrder;
+        this.Orders = blog.Orders;
+        this.Timestamp = blog.TimeStamp;
+        
+        this.Hide = blog.Hide;
+        this.Deleted = blog.Deleted;
+        this.CreatedDate = blog.CreatedDate;
+        this.UpdatedDate = blog.UpdatedDate;
     }
 }

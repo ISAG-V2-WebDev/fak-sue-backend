@@ -31,6 +31,8 @@ public class UserResponse
         this.Name = user.Name;
         this.Role = user.Role;
         this.StudentId = user.StudentId;
+        this.ProfileImage = user.ProfileImage;
+        
         this.Banned = user.Banned;
         this.Deleted = user.Deleted;
     }

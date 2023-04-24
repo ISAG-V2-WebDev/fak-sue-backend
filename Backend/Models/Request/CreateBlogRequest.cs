@@ -12,12 +12,15 @@ public class CreateBlogRequest
     [Required]
     [JsonPropertyName("content")]
     public string Content { get; set; } = null!;
-    
+
     [Required]
     [JsonPropertyName("timestamp")]
-    public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+    public DateTime TimeStamp { get; set; } = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 12, 0, 0);
 
     [Required]
     [JsonPropertyName("max_order")]
     public int MaxOrder { get; set; } = 1;
+
+    [JsonPropertyName("orders")] 
+    public List<Order>? Orders { get; set; } = null!;
 }
