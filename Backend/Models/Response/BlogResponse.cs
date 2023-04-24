@@ -23,7 +23,7 @@ public class BlogResponse
     public List<Order>? Orders { get; set; } = null!;
     
     [JsonPropertyName("timestamp")]
-    public DateTime Timestamp { get; set; }
+    public DateTime? Timestamp { get; set; }
     
     [JsonPropertyName("hide")]
     public bool Hide { get; set; }

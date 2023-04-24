@@ -207,24 +207,30 @@ public class AdminController : ControllerBase
             new Blog
             {
                 Topic = "Lunch",
-                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 12, 0, 0, DateTimeKind.Utc),
-                UserId = newUsers[0].Id
+                Detail = "Lolem Yipsum",
+                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 12, 0, 0),
+                UserId = newUsers[0].Id,
+                MaxOrder = 2,
             },
             new Blog
             {
                 Topic = "Brunch Time!",
-                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 18, 0, 0, DateTimeKind.Utc),
-                UserId = newUsers[1].Id
+                Detail = "Lolem Yipsum",
+                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 18, 0, 0),
+                UserId = newUsers[1].Id,
+                MaxOrder = 1,
             },
             new Blog
             {
                 Topic = "Lunch Time My Friend!",
-                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 12, 0, 0, DateTimeKind.Utc),
-                UserId = newUsers[4].Id
+                Detail = "Lolem Yipsum",
+                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 13, 0, 0),
+                UserId = newUsers[2].Id,
+                MaxOrder = 3,
             }
         };
 
-        // await _user.InsertManyAsync(newUsers);
+        await _user.InsertManyAsync(newUsers);
         await _blog.InsertManyAsync(newBlogs);
 
         return Ok(new { users = newUsers, blogs = newBlogs });

@@ -17,18 +17,21 @@ public class Blog
     public string Detail { get; set; } = "";
 
     [BsonElement("timestamp")] 
-    public DateTime TimeStamp { get; set; } = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 12, 0, 0);
+    [JsonPropertyName("timestamp")]
+    public DateTime? TimeStamp { get; set; }
 
     [BsonElement("user_id")]
     [BsonRepresentation(BsonType.ObjectId)]
     [JsonPropertyName("user_id")]
     public string UserId { get; set; } = "";
 
-    [BsonElement("max_order")] 
+    [BsonElement("max_order")]
+    [JsonPropertyName("max_order")]
     public int MaxOrder { get; set; } = 1;
 
     [BsonElement("orders")] 
-    public List<Order> Orders { get; set; } = null!;
+    [JsonPropertyName("orders")]
+    public List<Order>? Orders { get; set; } = null!;
 
     [BsonElement("hide")]
     [JsonPropertyName("hide")]

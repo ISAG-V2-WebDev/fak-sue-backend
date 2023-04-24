@@ -22,8 +22,8 @@ public class AdminBlogResponse
     [JsonPropertyName("orders")] 
     public List<Order>? Orders { get; set; } = null!;
     
-    [JsonPropertyName("timestamp")]
-    public DateTime Timestamp { get; set; }
+    [JsonPropertyName("order_timestamp")]
+    public DateTime? OrderTimestamp { get; set; }
     
     [JsonPropertyName("hide")]
     public bool Hide { get; set; }
@@ -45,7 +45,7 @@ public class AdminBlogResponse
         this.Content = blog.Detail;
         this.MaxOrder = blog.MaxOrder;
         this.Orders = blog.Orders;
-        this.Timestamp = blog.TimeStamp;
+        this.OrderTimestamp = blog.TimeStamp;
         
         this.Hide = blog.Hide;
         this.Deleted = blog.Deleted;

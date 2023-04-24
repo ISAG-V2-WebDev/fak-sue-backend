@@ -20,7 +20,7 @@ public class BlogPageResponse
     public int MaxOrder { get; set; } = 1;
     
     [JsonPropertyName("timestamp")]
-    public DateTime Timestamp { get; set; }
+    public DateTime? Timestamp { get; set; }
     
     [JsonPropertyName("orders")] 
     public List<Order>? Orders { get; set; } = null!;
