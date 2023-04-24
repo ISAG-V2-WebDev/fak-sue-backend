@@ -207,19 +207,19 @@ public class AdminController : ControllerBase
             new Blog
             {
                 Topic = "Lunch",
-                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 12, 30, 0),
+                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 12, 0, 0, DateTimeKind.Utc),
                 UserId = newUsers[0].Id
             },
             new Blog
             {
                 Topic = "Brunch Time!",
-                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 18, 0, 0),
+                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 18, 0, 0, DateTimeKind.Utc),
                 UserId = newUsers[1].Id
             },
             new Blog
             {
                 Topic = "Lunch Time My Friend!",
-                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 12, 0, 0),
+                TimeStamp = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 12, 0, 0, DateTimeKind.Utc),
                 UserId = newUsers[4].Id
             }
         };
