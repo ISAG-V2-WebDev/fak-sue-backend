@@ -56,7 +56,7 @@ public class BlogController : ControllerBase
         Blog? blog = await _blog.Find(x => x.Id == id && !x.Hide && !x.Deleted).FirstOrDefaultAsync();
 
         if (blog == null)
-            return NotFound("Order is not found.");
+            return NotFound("Blog is not found.");
         
         User? author = await _user.Find(x => x.Id == blog.UserId && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
 
@@ -90,7 +90,7 @@ public class BlogController : ControllerBase
         Blog? blog = await _blog.Find(x => x.Id == id && !x.Hide && !x.Deleted).FirstOrDefaultAsync();
 
         if (blog == null)
-            return NotFound("Order is not found.");
+            return NotFound("Blog is not found.");
         
         blog.Topic = body.Topic ?? blog.Topic;
         blog.Detail = body.Content ?? blog.Detail;
@@ -119,10 +119,10 @@ public class BlogController : ControllerBase
         
         Blog? blog = await _blog.Find(x => x.Id == id && !x.Hide && !x.Deleted).FirstOrDefaultAsync();
         if (blog == null)
-            return NotFound("Order is not found");
+            return NotFound("Blog is not found");
         
         if (user.Id != blog.UserId)
-            return Unauthorized("You are not the author of this order");
+            return Unauthorized("You are not the author of this blog");
         
         blog.Hide = !blog.Hide;
 
@@ -145,10 +145,10 @@ public class BlogController : ControllerBase
         
         Blog? blog = await _blog.Find(x => x.Id == id && !x.Hide && !x.Deleted).FirstOrDefaultAsync();
         if (blog == null)
-            return NotFound("Order is not found");
+            return NotFound("Blog is not found");
         
         if (user.Id != blog.UserId)
-            return Unauthorized("You are not the author of this order");
+            return Unauthorized("You are not the author of this blog");
         
         blog.Hide = true;
         blog.Deleted = true;

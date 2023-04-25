@@ -20,4 +20,8 @@ public class Order
 
     [BsonElement("quantity")] 
     public int Quantity { get; set; } = 1;
+
+    [BsonElement("blog_id")]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string BlogId { get; set; } = "";
 }
