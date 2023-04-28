@@ -11,7 +11,7 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-// [Authorize(Roles = "admin")]
+[Authorize(Roles = "admin")]
 public class AdminController : ControllerBase
 {
     private readonly IMongoCollection<User> _user;
@@ -199,7 +199,7 @@ public class AdminController : ControllerBase
                 Username = "admin5", Password = PasswordEncryption.Encrypt("AdminZa55+"), Name = "Admin MuMu",
                 Role = "admin"
             },
-            new User { Username = "test", Password = PasswordEncryption.Encrypt("userX123"), Name = "Test" }
+            // new User { Username = "test", Password = PasswordEncryption.Encrypt("userX123"), Name = "Test", Role = "user"},
         };
 
         List<Blog>? newBlogs = new List<Blog>

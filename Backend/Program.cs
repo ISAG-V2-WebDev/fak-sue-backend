@@ -19,12 +19,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => {
     options.TokenValidationParameters = new TokenValidationParameters()
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
+        //ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        //ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)),
         ClockSkew = TimeSpan.Zero
     };
@@ -61,7 +61,7 @@ builder.Services.Configure<FoodsDB_config>(builder.Configuration);
 builder.Services.AddSingleton<IDbClient, DbClient>();
 builder.Services.AddTransient<IMenuServices, MenuServices>();
 builder.Services.AddSingleton<IBlogServices, BlogServices>();
-// builder.Services.AddSingleton<IUserServices, UserServices>();
+builder.Services.AddSingleton<IUserServices, UserServices>();
 builder.Services.AddSingleton(new Configuration(builder.Configuration));
 
 //------------------------------------------------------------------------------------------
