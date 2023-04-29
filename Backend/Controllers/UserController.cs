@@ -25,11 +25,33 @@ public class UserController : ControllerBase
         _logger = logger;
     }
 
+    [HttpPost]
+    [Route("register")]
+    public async Task<IActionResult> RegisterUser(RegisterRequest registerRequest)
+    {
+        User? user = await _user.Find(x => x.Username == registerRequest.Username).FirstOrDefaultAsync();
+        if (user != null)
+            return BadRequest("This username is similar to someone else.");
+        if (registerRequest.ConfirmPassword != registerRequest.Password)
+            return BadRequest("Password and Confirm Password are not match.");
+        
+        User newUser = new User();
+        newUser.Username = registerRequest.Username;
+        newUser.Name = registerRequest.Name;
+        newUser.Password = PasswordEncryption.Encrypt(registerRequest.Password);
+        newUser.StudentId = registerRequest.StudentId;
+        newUser.Role = "user";
+        
+        await _user.InsertOneAsync(newUser);
+        return Ok(newUser);
+    }
+
     [HttpGet]
     [Route("profile")]
     public async Task<IActionResult> GetUserProfile()
     {
         string? username = Request.HttpContext.User.FindFirstValue("username");
+        Console.WriteLine(Request.HttpContext.User);
         
         User? user = await _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
         if (user == null)

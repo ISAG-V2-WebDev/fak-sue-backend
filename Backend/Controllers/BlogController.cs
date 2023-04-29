@@ -80,7 +80,7 @@ public class BlogController : ControllerBase
             Orders = body.Orders, MaxOrder = body.MaxOrder};
         await _blog.InsertOneAsync(newBlog);
 
-        return Ok(CreatedAtAction(nameof(CreateBlog), newBlog));                             
+        return Ok(CreatedAtAction(nameof(CreateBlog), newBlog));
     }
     
     [HttpPatch]

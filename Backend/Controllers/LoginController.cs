@@ -16,7 +16,6 @@ namespace Backend.Controllers;
 [Route("api/[controller]")]
 public class LoginController : ControllerBase
 {
-    
     private readonly IMongoCollection<User> _user;
     private readonly ILogger<UserController> _logger;
     
@@ -25,7 +24,6 @@ public class LoginController : ControllerBase
         _user = dbClient.UserCollection();
         _logger = logger;
     }
-    
     [HttpPost, Route("login")]
     public async Task<IActionResult> Login(RegisterAdminRequest loginDTO)
     {
@@ -42,9 +40,12 @@ public class LoginController : ControllerBase
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.StaticConfig["Jwt:SecretKey"]!));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var jwtSecurityToken = new JwtSecurityToken(
-                    issuer: "ABCxyz",
-                    audience: "http://localhost:7150",
-                    claims: new List<Claim>(),
+                    //issuer: "ABCxyz",
+                    //audience: "http://localhost:7150",
+                    claims: new List<Claim>{
+                        new Claim(ClaimTypes.Name, user.Username),
+                        new Claim(ClaimTypes.Role, user.Role),
+                    },
                     expires: DateTime.UtcNow.AddMinutes(10),
                     signingCredentials: signinCredentials);
                 return Ok(new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken));
@@ -54,18 +55,6 @@ public class LoginController : ControllerBase
         {
             return BadRequest("An error occured in generating the token");
         }
-
         return Unauthorized("You are not authorized");
     }
-
-    // [HttpPost]
-    // public bool ValidateCredentials(RegisterAdminRequest loginDTO)
-    // {
-    //     User user = _user.Find(x =>
-    //         x.Username == loginDTO.Username && PasswordEncryption.Encrypt(loginDTO.Password) == x.Password &&
-    //         !x.Banned && !x.Deleted).FirstOrDefault();
-    //     if (user != null)
-    //         return true;
-    //     return false;
-    // }
 }

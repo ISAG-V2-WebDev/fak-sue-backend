@@ -11,7 +11,7 @@ public class UserResponse
     public string Name { get; set; } = null!;
     
     [JsonPropertyName("role")]
-    public string Role { get; set; } = null!;
+    public string? Role { get; set; } = null!;
     
     [JsonPropertyName("student_id")]
     public string StudentId { get; set; } = "";
