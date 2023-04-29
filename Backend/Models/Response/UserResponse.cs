@@ -15,7 +15,10 @@ public class UserResponse
     
     [JsonPropertyName("student_id")]
     public string StudentId { get; set; } = "";
-    
+
+    [JsonPropertyName("email")]
+    public string? Email { get; set; } = "";
+
     [JsonPropertyName("profile_image")]
     public string? ProfileImage { get; set; }
     
@@ -31,6 +34,7 @@ public class UserResponse
         this.Name = user.Name;
         this.Role = user.Role;
         this.StudentId = user.StudentId;
+        this.Email = user.Email;
         this.ProfileImage = user.ProfileImage;
         
         this.Banned = user.Banned;

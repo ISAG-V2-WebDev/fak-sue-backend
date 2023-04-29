@@ -1,3 +1,4 @@
+using System.Net.Mail;
 using System.Security.Claims;
 using Backend.Config;
 using Backend.Models;
@@ -24,35 +25,14 @@ public class UserController : ControllerBase
         _user = dbClient.UserCollection();
         _logger = logger;
     }
-
-    [HttpPost]
-    [Route("register")]
-    public async Task<IActionResult> RegisterUser(RegisterRequest registerRequest)
-    {
-        User? user = await _user.Find(x => x.Username == registerRequest.Username).FirstOrDefaultAsync();
-        if (user != null)
-            return BadRequest("This username is similar to someone else.");
-        if (registerRequest.ConfirmPassword != registerRequest.Password)
-            return BadRequest("Password and Confirm Password are not match.");
-        
-        User newUser = new User();
-        newUser.Username = registerRequest.Username;
-        newUser.Name = registerRequest.Name;
-        newUser.Password = PasswordEncryption.Encrypt(registerRequest.Password);
-        newUser.StudentId = registerRequest.StudentId;
-        newUser.Role = "user";
-        
-        await _user.InsertOneAsync(newUser);
-        return Ok(newUser);
-    }
-
+    
     [HttpGet]
     [Route("profile")]
     public async Task<IActionResult> GetUserProfile()
     {
         string? username = User.FindFirstValue(ClaimTypes.Name);
-        Console.WriteLine(Request.HttpContext.User);
-        Console.WriteLine(username);
+        // Console.WriteLine(Request.HttpContext.User);
+        // Console.WriteLine(username);
         
         User? user = await _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
         if (user == null)
@@ -70,7 +50,7 @@ public class UserController : ControllerBase
         if (body.Password != body.ConfirmPassword)
             return Unauthorized("Password does not match.");
         
-        string? username = Request.HttpContext.User.FindFirstValue("username");
+        string? username = User.FindFirstValue(ClaimTypes.Name);
         
         User? user = await _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
         if (user == null)
@@ -91,7 +71,7 @@ public class UserController : ControllerBase
     [Route("update")]
     public async Task<IActionResult> UpdateUser(UpdateUserRequest body)
     {
-        string? username = Request.HttpContext.User.FindFirstValue("username");
+        string? username = User.FindFirstValue(ClaimTypes.Name);
         
         User? user = await _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
         if (user == null)
@@ -110,7 +90,7 @@ public class UserController : ControllerBase
     [Route("delete")]
     public async Task<IActionResult> DeleteUser()
     {
-        string? username = Request.HttpContext.User.FindFirstValue("username");
+        string? username = User.FindFirstValue(ClaimTypes.Name);
         
         User? user = await _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
         if (user == null)
@@ -141,9 +121,23 @@ public class UserController : ControllerBase
         User newUser = new User();
         newUser.Username = registerRequest.Username;
         newUser.Name = registerRequest.Name;
+        newUser.Email = registerRequest.Email;
         newUser.Password = PasswordEncryption.Encrypt(registerRequest.Password);
         newUser.StudentId = registerRequest.StudentId;
         newUser.Role = "user";
+        
+        try
+        {
+            var test = new MailAddress(newUser.Email);
+        }
+        catch (FormatException)
+        {
+            return BadRequest("Email is not valid");
+        }
+        catch (ArgumentException)
+        {
+            return BadRequest("Email is not valid");
+        }
         
         await _user.InsertOneAsync(newUser);
         return Ok(newUser);
