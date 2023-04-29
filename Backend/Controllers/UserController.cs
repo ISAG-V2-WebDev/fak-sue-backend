@@ -13,7 +13,7 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-// [Authorize]
+[Authorize(Roles = "admin, user")]
 public class UserController : ControllerBase
 {
     private readonly IMongoCollection<User> _user;
@@ -82,7 +82,7 @@ public class UserController : ControllerBase
 
         return Ok(user);
     }
-    
+
     [HttpDelete]
     [Route("delete")]
     public async Task<IActionResult> DeleteUser()
@@ -102,5 +102,27 @@ public class UserController : ControllerBase
         await _user.ReplaceOneAsync(x => x.Id == user.Id, user);
 
         return Ok(user);
+    }
+    
+    [HttpPost]
+    [AllowAnonymous]
+    [Route("register")]
+    public async Task<IActionResult> RegisterUser(RegisterRequest registerRequest)
+    {
+        User? user = await _user.Find(x => x.Username == registerRequest.Username).FirstOrDefaultAsync();
+        if (user != null)
+            return BadRequest("This username is similar to someone else.");
+        if (registerRequest.ConfirmPassword != registerRequest.Password)
+            return BadRequest("Password and Confirm Password are not match.");
+        
+        User newUser = new User();
+        newUser.Username = registerRequest.Username;
+        newUser.Name = registerRequest.Name;
+        newUser.Password = PasswordEncryption.Encrypt(registerRequest.Password);
+        newUser.StudentId = registerRequest.StudentId;
+        newUser.Role = "user";
+        
+        await _user.InsertOneAsync(newUser);
+        return Ok(newUser);
     }
 }

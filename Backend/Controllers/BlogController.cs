@@ -11,7 +11,7 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-// [Authorize]
+[Authorize(Roles = "admin,user")]
 public class BlogController : ControllerBase
 {
     private readonly IMongoCollection<Blog> _blog;

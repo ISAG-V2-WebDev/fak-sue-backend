@@ -104,18 +104,20 @@ public class AdminController : ControllerBase
     public async Task<IActionResult> GetBlogs()
     {
         List<Blog> blogs = await _blog.Find(x => true).ToListAsync();
-        List<AdminBlogResponse> blogResponses = new List<AdminBlogResponse>();
+
+        List<BlogResponse> blogResponses = new List<BlogResponse>();
 
         foreach (Blog blog in blogs)
         {
-            User user = await _user.Find(x => x.Id == blog.UserId).FirstAsync();
-            AdminBlogResponse blogResponse = new AdminBlogResponse(blog);
+            User? user = await _user.Find(x => true)
+                .FirstOrDefaultAsync();
+            BlogResponse blogResponse = new BlogResponse(blog, user);
             blogResponses.Add(blogResponse);
         }
 
-        AdminBlogListResponse blogList = new AdminBlogListResponse
-            { Blogs = blogResponses.OrderByDescending(x => x.UpdatedDate).ToList() };
-
+        BlogListResponse blogList = new BlogListResponse
+            { Blogs = blogResponses.OrderByDescending(x => x.CreatedDate).ToList() };
+        
         return Ok(blogList);
     }
 
