@@ -22,4 +22,7 @@ public class RegisterRequest
     [Required]
     [JsonPropertyName("confirm_password")]
     public string ConfirmPassword { get; set; } = null!;
+    
+    [JsonPropertyName("student_id")] 
+    public string StudentId { get; set; } = "";
 }

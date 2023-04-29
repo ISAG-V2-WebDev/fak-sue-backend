@@ -44,7 +44,7 @@ public class LoginController : ControllerBase
                     //audience: "http://localhost:7150",
                     claims: new List<Claim>{
                         new Claim(ClaimTypes.Name, user.Username),
-                        new Claim(ClaimTypes.Role, user.Role),
+                        new Claim(ClaimTypes.Role, user.Role!),
                     },
                     expires: DateTime.UtcNow.AddMinutes(10),
                     signingCredentials: signinCredentials);
