@@ -50,8 +50,9 @@ public class UserController : ControllerBase
     [Route("profile")]
     public async Task<IActionResult> GetUserProfile()
     {
-        string? username = Request.HttpContext.User.FindFirstValue("username");
+        string? username = User.FindFirstValue(ClaimTypes.Name);
         Console.WriteLine(Request.HttpContext.User);
+        Console.WriteLine(username);
         
         User? user = await _user.Find(x => x.Username == username && !x.Banned && !x.Deleted).FirstOrDefaultAsync();
         if (user == null)
