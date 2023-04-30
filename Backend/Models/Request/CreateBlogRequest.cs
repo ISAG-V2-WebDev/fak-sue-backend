@@ -23,4 +23,6 @@ public class CreateBlogRequest
 
     [JsonPropertyName("orders")] 
     public List<Order>? Orders { get; set; } = new List<Order>();
+    [JsonPropertyName("time")]
+    public string Time { get; set; } = null!;
 }

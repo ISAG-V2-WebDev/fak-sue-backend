@@ -24,4 +24,7 @@ public class AdminBlogUpdateRequest
     
     [JsonPropertyName("delete")]
     public bool? Delete { get; set; }
+    
+    [JsonPropertyName("time")]
+    public string Time { get; set; } = null!;
 }

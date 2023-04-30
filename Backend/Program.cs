@@ -32,7 +32,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     // .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => builder.Configuration.Bind("JwtSettings", options))
     // .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => builder.Configuration.Bind("CookieSettings", options));
     // .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
-
+Console.WriteLine(builder.Configuration["CONNECTION_STRING"]);
+Console.WriteLine(builder.Configuration["ADMIN_CONNECTION_STRING"]);
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(name: builder.Configuration["Authorization:PolicyName"]!,

@@ -36,6 +36,9 @@ public class BlogResponse
     
     [JsonPropertyName("updated_date")]
     public DateTime UpdatedDate { get; set; }
+    
+    [JsonPropertyName("time")]
+    public string Time { get; set; } = null!;
 
     public BlogResponse(Blog blog, User? user)
     {
@@ -52,5 +55,6 @@ public class BlogResponse
         this.Deleted = blog.Deleted;
         this.CreatedDate = blog.CreatedDate;
         this.UpdatedDate = blog.UpdatedDate;
+        this.Time = blog.Time;
     }
 }

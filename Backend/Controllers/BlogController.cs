@@ -11,7 +11,7 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "admin,user")]
+[Authorize(Roles = "admin, user")]
 public class BlogController : ControllerBase
 {
     private readonly IMongoCollection<Blog> _blog;
@@ -68,7 +68,7 @@ public class BlogController : ControllerBase
     [Route("create")]
     public async Task<IActionResult> CreateBlog(CreateBlogRequest body)
     {
-        string? username = Request.HttpContext.User.FindFirstValue("username");
+        string? username = User.FindFirstValue(ClaimTypes.Name);
         if (String.IsNullOrEmpty(username))
             return Unauthorized("You are not authorized user.");
 
@@ -77,7 +77,7 @@ public class BlogController : ControllerBase
             return NotFound("User is not found");
         
         Blog newBlog = new Blog { Topic = body.Topic, Detail = body.Content, UserId = user.Id, TimeStamp = body.TimeStamp, 
-            Orders = body.Orders, MaxOrder = body.MaxOrder};
+            Orders = body.Orders, MaxOrder = body.MaxOrder, Time = body.Time};
         await _blog.InsertOneAsync(newBlog);
 
         return Ok(CreatedAtAction(nameof(CreateBlog), newBlog));
@@ -109,7 +109,7 @@ public class BlogController : ControllerBase
     [Route("hide/id={id:length(24)}")]
     public async Task<IActionResult> HideBlog(string id)
     {
-        string? username = Request.HttpContext.User.FindFirstValue("username");
+        string? username = User.FindFirstValue(ClaimTypes.Name);
         if (String.IsNullOrEmpty(username))
             return Unauthorized("You are not authorized user.");
         
@@ -135,7 +135,7 @@ public class BlogController : ControllerBase
     [Route("delete/id={id:length(24)}")]
     public async Task<IActionResult> DeleteBlog(string id)
     {
-        string? username = Request.HttpContext.User.FindFirstValue("username");
+        string? username = User.FindFirstValue(ClaimTypes.Name);
         if (String.IsNullOrEmpty(username))
             return Unauthorized("You are not authorized user.");
 

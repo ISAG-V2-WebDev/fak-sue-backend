@@ -9,7 +9,7 @@ public class Blog
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
-
+    
     [BsonElement("topic")] 
     public string Topic { get; set; } = null!;
 
@@ -46,4 +46,7 @@ public class Blog
     
     [BsonElement("updated_date")]
     public DateTime UpdatedDate { get; set; } = DateTime.Now;
+
+    [BsonElement("time")]
+    public string Time { get; set; } = null!;
 }

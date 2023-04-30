@@ -28,7 +28,7 @@ public class OrderController : ControllerBase
     [Route("create/blogid={blogId:length(24)}")]
     public async Task<IActionResult> CreateOrder(CreateOrderRequest body, string blogId)
     {
-        string? username = Request.HttpContext.User.FindFirstValue("username");
+        string? username = User.FindFirstValue(ClaimTypes.Name);
         if (string.IsNullOrEmpty(username))
             return Unauthorized("You are not authorized user.");
 
@@ -68,7 +68,7 @@ public class OrderController : ControllerBase
     [Route("update/blogid={blogId:length(24)}/id={orderId:length(24)}")]
     public async Task<IActionResult> UpdateOrder(string blogId, string orderId, EditOrderRequest body)
     {
-        string? username = Request.HttpContext.User.FindFirstValue("username");
+        string? username = User.FindFirstValue(ClaimTypes.Name);
         if (string.IsNullOrEmpty(username))
             return Unauthorized("You are not authorized user.");
         
@@ -102,7 +102,7 @@ public class OrderController : ControllerBase
     [Route("delete/blogid={blogId:length(24)}/id={orderId:length(24)}")]
     public async Task<IActionResult> DeleteOrder(string blogId, string orderId)
     {
-        string? username = Request.HttpContext.User.FindFirstValue("username");
+        string? username = User.FindFirstValue(ClaimTypes.Name);
         if (string.IsNullOrEmpty(username))
             return Unauthorized("You are not authorized user.");
         

@@ -30,6 +30,9 @@ public class BlogPageResponse
 
     [JsonPropertyName("updated_date")]
     public DateTime UpdatedDate { get; set; }
+    
+    [JsonPropertyName("time")]
+    public string Time { get; set; } = null!;
 
     public BlogPageResponse(Blog blog, User user)
     {
@@ -43,5 +46,6 @@ public class BlogPageResponse
         
         this.CreatedDate = blog.CreatedDate;
         this.UpdatedDate = blog.UpdatedDate;
+        this.Time = blog.Time;
     }
 }
